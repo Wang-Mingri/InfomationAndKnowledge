@@ -1,0 +1,6 @@
+# jetbrains
+venv/
+.idea/
+
+# examples
+examples/
