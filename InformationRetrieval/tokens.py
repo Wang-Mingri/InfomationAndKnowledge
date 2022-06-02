@@ -37,7 +37,7 @@ def getToken(single_name):
         # token_list = zh_nlp(segment)
         # print(*token_list)
         result += token_list
-    print(*result)
+    # print(*result)
     return result
 
 
