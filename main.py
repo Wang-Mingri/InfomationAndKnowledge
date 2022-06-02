@@ -1,16 +1,11 @@
-# This is a sample Python script.
+import os
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import spider
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # 若数据未爬取或者爬取文档数目小于100 重新爬取
+    if not (os.path.exists('./data/') | len(os.listdir('./data/')) < 100):
+        spider()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+

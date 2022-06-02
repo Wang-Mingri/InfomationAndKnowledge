@@ -28,7 +28,7 @@ def buildIndex():
     word_list = buildWordList(index_sorted)
 
     # 将数据写入文件中
-    writeToFile(index, '../retrievalndex.json')
+    writeToFile(index, '../index.json')
     writeToFile(word_list, '../wordlist.json')
 
 

@@ -69,18 +69,11 @@ def getArticle(url_html):
         print(e)
 
 
-def spider(init_url):
+def spider():
+    init_url = 'http://www.olympic.cn/news/olympic_comm/'
     for i in range(1, 10):
         tail = f'list_407_{i}.html'
         html_list = getURL(init_url + tail)
         for j in html_list:
             getArticle(j)
 
-
-def main():
-    init_url = 'http://www.olympic.cn/news/olympic_comm/'
-    spider(init_url)
-
-
-if __name__ == '__main__':
-    main()
