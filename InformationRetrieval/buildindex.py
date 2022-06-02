@@ -1,6 +1,7 @@
 import os
 import json
-import tokens
+from InformationRetrieval import tokens
+
 
 def buildIndex():
     index = {}

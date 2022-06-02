@@ -1,8 +1,8 @@
 import os
 
 import spider
-from InformationRetrieval import buildindex
-from InformationRetrieval import getindex
+from InformationRetrieval.buildindex import *
+from InformationRetrieval.getindex import *
 
 
 if __name__ == '__main__':
@@ -11,7 +11,7 @@ if __name__ == '__main__':
         spider()
 
     # 创建倒叙索引表
-    buildindex()
+    buildIndex()
 
 
 
