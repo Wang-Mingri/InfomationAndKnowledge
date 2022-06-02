@@ -7,7 +7,11 @@ import logging
 # import stanza
 
 
+<<<<<<< HEAD
 diction_path = "/InformationRetrieval/diction.txt"
+=======
+diction_path = "InformationRetrieval/diction.txt"
+>>>>>>> 7f6e8178f015516c2951248165124bc06ad9056e
 jieba.load_userdict(diction_path)
 
 jieba.setLogLevel(logging.INFO)
