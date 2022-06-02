@@ -18,10 +18,11 @@ plt.rcParams['axes.unicode_minus'] = False
 
 file_path = 'data/'
 
+
 # 对目录页面索引，寻找所需要内容网页的网址
 def getURL(url):
-    headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                              'Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.53'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                             'Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.53'}
 
     response = requests.get(url, headers=headers, verify=False)
     html = etree.HTML(response.text, etree.HTMLParser())
@@ -32,6 +33,7 @@ def getURL(url):
         html_list.append(li.xpath('./a/@href')[0])
 
     return html_list
+
 
 # 将获取数据转换为字典
 def getDict(title, time, content, url):
@@ -56,27 +58,23 @@ def getArticle(url_html):
         content_result = html.xpath('/html/body/div[2]/div[4]/div[1]/div/div[2]/p')
         content = []
         for p in content_result:
-            content.append(p.xpath('./text()')[0]) #获取到内容
+            content.append(p.xpath('./text()')[0])  # 获取到内容
         url = url_html
 
         html_dict = getDict(title, time, '\n'.join(content), url)
-        with open(f"{file_path}{'-'.join(time.split()).replace(':','-')}.json", 'w') as write_f:
+        with open(f"{file_path}{'-'.join(time.split()).replace(':', '-')}.json", 'w') as write_f:
             json.dump(html_dict, write_f, indent=4, ensure_ascii=False)
 
     except IndexError as e:
         print(e)
 
 
-
-
 def spider(init_url):
-    for i in range(1,10):
+    for i in range(1, 10):
         tail = f'list_407_{i}.html'
         html_list = getURL(init_url + tail)
         for j in html_list:
             getArticle(j)
-
-
 
 
 def main():
