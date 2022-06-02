@@ -15,7 +15,7 @@ jieba.setLogLevel(logging.INFO)
 
 def getToken(single_name):
 
-    file_name = "./data/" + single_name
+    file_name = "data/" + single_name
 
     # file_name = "data/2022-03-02-07-59.json"
     text = json.loads(open(file_name, 'r').read())
