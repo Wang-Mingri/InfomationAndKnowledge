@@ -5,7 +5,7 @@ from InformationRetrieval import tokens
 
 def buildIndex():
     index = {}
-    path = './data/' #获取文件路径
+    path = '/data/' #获取文件路径
     files = os.listdir(path)
     for file in files:
         doc_id = files.index(file) # 获取文件的索引号
@@ -29,8 +29,8 @@ def buildIndex():
     word_list = buildWordList(index_sorted)
 
     # 将数据写入文件中
-    writeToFile(index, '../index.json')
-    writeToFile(word_list, '../wordlist.json')
+    writeToFile(index, '/index.json')
+    writeToFile(word_list, '/wordlist.json')
 
 
 def sortDict(dict):
