@@ -7,15 +7,15 @@ import logging
 # import stanza
 
 
-diction_path = "diction.txt"
-jieba.load_userdict(diction_path)
+# diction_path = "./diction.txt"
+# jieba.load_userdict(diction_path)
 
 jieba.setLogLevel(logging.INFO)
 
 
 def getToken(single_name):
 
-    file_name = "../data/" + single_name
+    file_name = "./data/" + single_name
 
     # file_name = "data/2022-03-02-07-59.json"
     text = json.loads(open(file_name, 'r').read())

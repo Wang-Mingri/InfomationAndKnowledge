@@ -5,7 +5,7 @@ from InformationRetrieval import tokens
 
 def buildIndex():
     index = {}
-    path = '../data/' #获取文件路径
+    path = './data/' #获取文件路径
     files = os.listdir(path)
     for file in files:
         doc_id = files.index(file) # 获取文件的索引号
