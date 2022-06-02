@@ -1,14 +1,14 @@
 import os
 import json
+import tokens
 
 def buildIndex():
     index = {}
-    path = os.getcwd()
-    path += '../data/' #获取文件路径
+    path = '../data/' #获取文件路径
     files = os.listdir(path)
     for file in files:
         doc_id = files.index(file) # 获取文件的索引号
-        content = get(file) # 获取json文件中内容
+        content = tokens.getToken(file) # 获取json文件中内容
 
         pos = 0 # 倒排索引表中 文档中位置
         for word in content:
