@@ -7,8 +7,8 @@ import logging
 # import stanza
 
 
-diction_path = "./diction.txt"
-jieba.load_userdict(diction_path)
+# diction_path = "diction.txt"
+# jieba.load_userdict(diction_path)
 
 jieba.setLogLevel(logging.INFO)
 
