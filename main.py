@@ -2,7 +2,6 @@ import os.path, time
 
 import spider
 from InformationRetrieval.buildindex import *
-from InformationRetrieval.getindex import *
 from InformationRetrieval.tokens import *
 
 
@@ -14,7 +13,7 @@ def fun1(index, word_list, files, sentence):
     # TODO 获取所有分词结果所对应文档     wendang(index, pieces)
     # TODO 计算各个文档向量空间模型匹配程度  xiangliang(index, len(files), pieces, wendang)
     # TODO 对所有文档得分排序
-    # TODO 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路）
+    # TODO 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路） # [score, file_name]
     return
 
 

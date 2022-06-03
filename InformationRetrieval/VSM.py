@@ -1,5 +1,6 @@
 import cmath
-
+import os
+import json
 
 def getDataFilename(index, pieces):
     temp_list = []
@@ -44,3 +45,19 @@ def getWfIdfScore(index, file_num, pieces, file_id):
         idf = cmath.log10(file_num / df).real
         score += wf * idf
     return score
+
+def id2name(file_id):
+    path = 'data/'  # 获取文件路径
+    files = os.listdir(path)
+    return files[file_id]
+
+# 文档，得分，title，日期，url，匹配内容
+# reports [[score, file_id], ...]
+def getResult(index, reports):
+    results = []
+    for report in reports:
+        file_name = id2name(report[1])
+        full_path = "data/" + file_name
+        text = json.loads(open(full_path, 'r').read())
+
+        results.append([file_name, report[0], text["标题"], text["日期"], text["网址"]])
