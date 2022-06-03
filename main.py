@@ -3,16 +3,19 @@ import os.path, time
 import spider
 from InformationRetrieval.buildindex import *
 from InformationRetrieval.getindex import *
+from InformationRetrieval.tokens import *
 
 
-def fun1(index, word_list,files, sentence):
-    # TODO sentence分词  fenci(sentence)
-    # TODO 将分词后去重，去杂（可不用）
+def fun1(index, word_list, files, sentence):
+    pieces = getToken(sentence, 1)  # sentence分词
+    # print(*pieces)
+    pieces = deduplicate(pieces)
+    print(*pieces)
     # TODO 获取所有分词结果所对应文档     wendang(index, pieces)
     # TODO 计算各个文档向量空间模型匹配程度  xiangliang(index, len(files), pieces, wendang)
     # TODO 对所有文档得分排序
     # TODO 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路）
-
+    return
 
 
 if __name__ == '__main__':
@@ -38,27 +41,26 @@ if __name__ == '__main__':
 
     print("************************************信息索引系统************************************")
     while True:
-        print("请输入搜索模式： ")
-        print("[1] 只在标题中， 只考虑正文， ")
 
-        try:
-            options = int(input())
-            if options == 2:
-                break
-            if options > 2:
-                print("输入数字不规范，重新输入")
-                continue
-        except:
-            print("输入存在违法，请重新输入")
-            continue
+        # print("请输入搜索模式： ")
+        # print("[1] 只在标题中， 只考虑正文， ")
+        #
+        # try:
+        #     options = int(input())
+        #     if options == 2:
+        #         break
+        #     if options > 2:
+        #         print("输入数字不规范，重新输入")
+        #         continue
+        # except:
+        #     print("输入存在违法，请重新输入")
+        #     continue
+        if True:  # FIXME: 改一下逻辑 测试环节太难受了
+            options = 1
+            print("已进入只在正文查找模式")
 
         print("请输入待查询语句:")
         sentence = input()
 
         if options == 1:
-            fun1(index, word_list,files, sentence)
-
-
-
-
-
+            fun1(index, word_list, files, sentence)

@@ -4,6 +4,7 @@ import json
 import jieba
 import re
 import logging
+
 # import stanza
 
 
@@ -13,17 +14,19 @@ jieba.load_userdict(diction_path)
 jieba.setLogLevel(logging.INFO)
 
 
-def getToken(single_name):
+# 先前的代码不变，若需要使用getToken处理字面量，则给第二个参数赋转入非零值
+def getToken(single_name, state=0):
+    if state == 0:
+        file_name = "data/" + single_name
+        # file_name = "data/2022-03-02-07-59.json"
+        text = json.loads(open(file_name, 'r').read())
 
-    file_name = "data/" + single_name
-
-    # file_name = "data/2022-03-02-07-59.json"
-    text = json.loads(open(file_name, 'r').read())
+        attribute = "正文"
+        attribute_text = text[attribute]
+    else:
+        attribute_text = single_name
     # print(*text)
-    result = []
 
-    attribute = "正文"
-    attribute_text = text[attribute]
     attribute_text = re.sub('[“”‘’、()《》 ]', '', attribute_text)
     # print(attribute_text)
     segment_list = re.split('[，,。：；\n\r\t]', attribute_text)
@@ -31,6 +34,7 @@ def getToken(single_name):
         segment_list.remove('')
     # print(*segment_list)
 
+    result = []
     for segment in segment_list:
         # print(segment)
         token_list = jieba.cut(segment, use_paddle=True)
@@ -41,3 +45,5 @@ def getToken(single_name):
     return result
 
 
+def deduplicate(tokens):
+    return set(tokens)
