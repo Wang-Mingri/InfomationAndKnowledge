@@ -1,5 +1,5 @@
 # InfomationAndKnowledge
- 
+
 ## 环境配置说明
 1. pip安装paddlepaddle-tiny出现不能下载的问题。换用如下方式采用豆瓣源安装
 ```shell
@@ -19,7 +19,22 @@ pip install protobuf==3.20
 - 多媒体信息检索以及优化各模块算法。
 - 算法评估、优化、论证创新点。
 
+### main.fun1()
+- [x] sentence分词  
+```python
+# 先前的代码不变，若需要使用getToken处理字面量，则给第二个参数赋转入非零值
+getToken(sentence, 1) # InformationRetrieval/tokens.py
+```
+- [x] 将分词后去重，去杂
+```python
+pieces = deduplicate(pieces) # InformationRetrieval/tokens.py
+```
+![image-20220604002400222](https://cdn.jsdelivr.net/gh/Wang-Mingri/Pic/PicGo/2022/06/04/20220604-1654273440.png)
 
+- [ ] 获取所有分词结果所对应文档     wendang(index, pieces)
+- [ ] 计算各个文档向量空间模型匹配程度  xiangliang(index, len(files), pieces, wendang)
+- [ ] 对所有文档得分排序
+- [ ] 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路）
 
 ---
 
