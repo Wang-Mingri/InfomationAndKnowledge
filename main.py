@@ -6,12 +6,12 @@ from InformationRetrieval.getindex import *
 
 
 def fun1(index, word_list,files, sentence):
-    # TODO sentence分词
+    # TODO sentence分词  fenci(sentence)
     # TODO 将分词后去重，去杂（可不用）
-    # TODO 获取所有分词结果所对应文档
-    # TODO 计算各个文档向量空间模型匹配程度
+    # TODO 获取所有分词结果所对应文档     wendang(index, pieces)
+    # TODO 计算各个文档向量空间模型匹配程度  xiangliang(index, len(files), pieces, wendang)
     # TODO 对所有文档得分排序
-    # TODO 输出前X想文档，得分，title，日期，url，匹配内容（有点难目前没思路）
+    # TODO 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路）
 
 
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     print("************************************信息索引系统************************************")
     while True:
         print("请输入搜索模式： ")
-        print("[1] ")
+        print("[1] 只在标题中， 只考虑正文， ")
 
         try:
             options = int(input())
