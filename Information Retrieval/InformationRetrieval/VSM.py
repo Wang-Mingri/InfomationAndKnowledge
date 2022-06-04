@@ -2,6 +2,7 @@ import cmath
 import os
 import json
 from InformationRetrieval import tokens
+from datetime import datetime
 
 
 # index 倒排索引 piece (2022年 北京 冬奥会)
@@ -56,14 +57,21 @@ def id2name(file_id):
 
 # 文档，得分，title，日期，url，匹配内容
 # reports [[ [score, highlight], file_id], ...]
-def printResult(index, reports, search_pieces):
-    results = []
+def printResult(reports, search_pieces, time_range):
+    counter = 0
     for report in reports:
         file_name = id2name(report[1])
         full_path = "data/" + file_name
         text = json.loads(open(full_path, 'r').read())
 
-        print(file_name, report[0][0], end=' ')
+        time = datetime.strptime(text["日期"], '%Y-%m-%d %H:%M')
+
+        if len(time_range[0]) > 0 and time < datetime.strptime(time_range[0], '%y.%m.%d') or \
+                len(time_range[1]) > 0 and time > datetime.strptime(time_range[1], '%y.%m.%d'):
+            continue
+        counter += 1
+        print(f'\033[1;30;47m{counter}\033[0m')
+        # print(file_name)
 
         # print(text["标题"])
         title_pieces = list(tokens.getToken(text["标题"], 1))
@@ -72,8 +80,11 @@ def printResult(index, reports, search_pieces):
                 print(f'\033[91m{title_piece}\033[0m', end='')
             else:
                 print(title_piece, end='')
-        print('', end=' ')
-        print(text["日期"], text["网址"])
+        print()
+
+        print(text["日期"])
+        print(text["网址"])
+        print("wf-idf匹配相关度: %.3f" % report[0][0])
 
         content = list(tokens.getToken(file_name))
         i = 0
@@ -88,6 +99,8 @@ def printResult(index, reports, search_pieces):
                 output_len += len(content[i])
             i += 1
         if i != len(content): print('...', end='')
-        print();print()
-    if len(reports) == 0:
-        print('\033[91m无匹配对象，请更换关键词重试\033[0m');print()
+        print('\n')
+    if counter == 0:
+        print('\033[31m无匹配对象，请更换关键词或时间范围重试。\033[0m\n\n')
+    else:
+        print(f'\033[32m查找成功！共返回{counter}条结果。\033[0m\n\n')

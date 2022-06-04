@@ -3,9 +3,5 @@ venv/
 .idea/
 */__pycache__/*
 
-# examples
-examples/
-
 # others
-Reference/
 *.pyc

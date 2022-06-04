@@ -6,7 +6,7 @@ from InformationRetrieval.tokens import *
 from InformationRetrieval.VSM import *
 
 
-def fun1(index, word_list, files, sentence):
+def fun1(index, files, sentence, time_range):
     pieces = getToken(sentence, 1)  # sentence分词
     # print(*pieces)
     pieces = deduplicate(pieces)
@@ -14,7 +14,7 @@ def fun1(index, word_list, files, sentence):
     file_list = getDataFilename(index, pieces)
     # print(*file_list)
     reports = getScoreList(index, len(files), pieces, file_list)
-    printResult(index, reports, pieces)
+    printResult(reports, pieces, time_range)
     return
 
 
@@ -62,7 +62,9 @@ if __name__ == '__main__':
         print("请输入待查询语句:")
         sentence = input()
 
-        print("请输入待查询时间:") # TODO: 查询时间范围
+        # TODO: 查询时间范围
+        start_str = input("请输入查询起始时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
+        end_str = input("请输入查询终止时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
 
         if options == 1:
-            fun1(index, word_list, files, sentence)
+            fun1(index, files, sentence, [start_str, end_str])
