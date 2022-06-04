@@ -21,6 +21,13 @@ def getToken(single_name, state=0):
         # file_name = "data/2022-03-02-07-59.json"
         text = json.loads(open(file_name, 'r').read())
 
+        # attribute_text = ''
+        # if arrange | 2:
+        #     attribute = "标题"
+        #     attribute_text += text[attribute]
+        # if arrange | 1:
+        #     attribute = "正文"
+        #     attribute_text += text[attribute]
         attribute = "正文"
         attribute_text = text[attribute]
     else:

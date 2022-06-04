@@ -14,7 +14,7 @@ def fun1(index, word_list, files, sentence):
     file_list = getDataFilename(index, pieces)
     # print(*file_list)
     reports = getScoreList(index, len(files), pieces, file_list)
-    printResult(index, reports)
+    printResult(index, reports, pieces)
     return
 
 
@@ -61,6 +61,8 @@ if __name__ == '__main__':
 
         print("请输入待查询语句:")
         sentence = input()
+
+        print("请输入待查询时间:") # TODO: 查询时间范围
 
         if options == 1:
             fun1(index, word_list, files, sentence)
