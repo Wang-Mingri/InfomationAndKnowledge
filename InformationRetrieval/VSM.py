@@ -59,14 +59,19 @@ def printResult(index, reports):
         full_path = "data/" + file_name
         text = json.loads(open(full_path, 'r').read())
 
-        print(file_name, report[0][0], text["标题"], text["日期"], text["网址"], end=' ')
+        print(file_name, report[0][0], text["标题"], text["日期"], text["网址"])
 
         content = list(tokens.getToken(file_name))
         i = 0
-        while i != len(content):
+        output_len = 0
+        while i != len(content) and output_len <= 50:
             if i in report[0][1]:
+                if output_len == 0 and i != 0: print('...', end='')
                 print(f'\033[91m{content[i]}\033[0m', end='')
-            else:
+                output_len += len(content[i])
+            elif output_len > 0:
                 print(content[i], end='')
+                output_len += len(content[i])
             i += 1
-        print()
+        if i != len(content): print('...', end='')
+        print();print()
