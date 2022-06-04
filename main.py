@@ -3,17 +3,18 @@ import os.path, time
 import spider
 from InformationRetrieval.buildindex import *
 from InformationRetrieval.tokens import *
+from InformationRetrieval.VSM import *
 
 
 def fun1(index, word_list, files, sentence):
     pieces = getToken(sentence, 1)  # sentence分词
     # print(*pieces)
     pieces = deduplicate(pieces)
-    print(*pieces)
-    # TODO 获取所有分词结果所对应文档     wendang(index, pieces)
-    # TODO 计算各个文档向量空间模型匹配程度  xiangliang(index, len(files), pieces, wendang)
-    # TODO 对所有文档得分排序
-    # TODO 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路） # [score, file_name]
+    # print(*pieces)
+    file_list = getDataFilename(index, pieces)
+    # print(*file_list)
+    reports = getScoreList(index, len(files), pieces, file_list)
+    printResult(index, reports)
     return
 
 
@@ -23,7 +24,7 @@ if __name__ == '__main__':
         spider()
 
     # 若不存在倒叙索引表 或者 创建时间早于data 则创建倒叙索引表
-    if not (os.path.exists('index.json') | os.path.exists('wordlist.json')):
+    if not os.path.exists('index.json') or not os.path.exists('wordlist.json'):
         buildIndex()
     else:
         index_time = time.localtime(os.stat("wordlist.json").st_mtime)

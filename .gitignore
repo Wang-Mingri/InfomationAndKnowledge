@@ -1,6 +1,7 @@
 # jetbrains
 venv/
 .idea/
+*/__pycache__/*
 
 # examples
 examples/

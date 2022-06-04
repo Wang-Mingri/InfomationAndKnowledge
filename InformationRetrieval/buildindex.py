@@ -4,11 +4,12 @@ from itertools import chain
 
 from InformationRetrieval import tokens
 
-from pypinyin import  pinyin, Style
+from pypinyin import pinyin, Style
 
 
 def buildIndex():
     index = {}
+    content = []
     path = 'data/'  # 获取文件路径
     files = os.listdir(path)
     for file in files:
@@ -44,6 +45,7 @@ def to_pinyin(s):
     '''
     return ''.join(chain.from_iterable(pinyin(s, style=Style.TONE3)))
 
+
 def sortDict(dict):
     sdict = {k: dict[k] for k in sorted(dict.keys(), key=to_pinyin)}
     for stem in sdict:
@@ -63,15 +65,19 @@ def writeToFile(data, filename):
         json.dump(data, write_f, indent=4, ensure_ascii=False)
 
 
-
 # 获取倒叙索引表
 def getIndex():
     with open('index.json', 'r') as index:
         index = json.load(index)
     return index
 
+
 # 获取词项列表
 def getWordList():
     with open('wordlist.json', 'r') as word_list:
         word_list = json.load(word_list)
     return word_list
+
+
+if __name__ == '__main__':
+    buildIndex()

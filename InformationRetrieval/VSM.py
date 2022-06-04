@@ -1,27 +1,24 @@
 import cmath
 import os
 import json
+from InformationRetrieval import tokens
 
+# index 倒排索引 piece (2022年 北京 冬奥会)
 def getDataFilename(index, pieces):
     temp_list = []
     for piece in pieces:
-        filename_list = []
-        if piece not in index:
-            temp_list.append(filename_list)
-        else:
+        if piece in index:
             filename_list = [int(key) for key in index[piece].keys()] # 查找对应文档对应的编号id
-            filename_list.sort() # 对文档编号排序
+            # filename_list.sort() # 对文档编号排序
             temp_list.append(filename_list)
-    list = []
-    for i in temp_list:
-        list += i
+    list = [element for lis in temp_list for element in lis]
     return sorted(set(list))
 
 def getScoreList(index, file_num, pieces, file_list):
     score_list = []
     for file_id in file_list:
-        score = getWfIdfScore(index, file_num, pieces, file_id)
-        score_list.append([score, file_id])
+        WfIdfScore = getWfIdfScore(index, file_num, pieces, file_id)
+        score_list.append([WfIdfScore, file_id])
     return sorted(score_list, reverse=True)
 
 
@@ -35,6 +32,7 @@ def getScoreList(index, file_num, pieces, file_list):
 # 故采用wf-idf来计算
 def getWfIdfScore(index, file_num, pieces, file_id):
     score = 0
+    highlight = []
     file_id = str(file_id)
     for piece in pieces:
         if piece not in index or file_id not in index[piece]:
@@ -44,7 +42,8 @@ def getWfIdfScore(index, file_num, pieces, file_id):
         wf = 1 + cmath.log10(tf).real
         idf = cmath.log10(file_num / df).real
         score += wf * idf
-    return score
+        highlight += index[piece][file_id]
+    return [score, highlight]
 
 def id2name(file_id):
     path = 'data/'  # 获取文件路径
@@ -52,12 +51,22 @@ def id2name(file_id):
     return files[file_id]
 
 # 文档，得分，title，日期，url，匹配内容
-# reports [[score, file_id], ...]
-def getResult(index, reports):
+# reports [[ [score, highlight], file_id], ...]
+def printResult(index, reports):
     results = []
     for report in reports:
         file_name = id2name(report[1])
         full_path = "data/" + file_name
         text = json.loads(open(full_path, 'r').read())
 
-        results.append([file_name, report[0], text["标题"], text["日期"], text["网址"]])
+        print(file_name, report[0][0], text["标题"], text["日期"], text["网址"], end=' ')
+
+        content = list(tokens.getToken(file_name))
+        i = 0
+        while i != len(content):
+            if i in report[0][1]:
+                print(f'\033[91m{content[i]}\033[0m', end='')
+            else:
+                print(content[i], end='')
+            i += 1
+        print()

@@ -31,10 +31,17 @@ pieces = deduplicate(pieces) # InformationRetrieval/tokens.py
 ```
 ![image-20220604002400222](https://cdn.jsdelivr.net/gh/Wang-Mingri/Pic/PicGo/2022/06/04/20220604-1654273440.png)
 
-- [ ] 获取所有分词结果所对应文档     wendang(index, pieces)
-- [ ] 计算各个文档向量空间模型匹配程度  xiangliang(index, len(files), pieces, wendang)
-- [ ] 对所有文档得分排序
-- [ ] 输出前X项文档，得分，title，日期，url，匹配内容（有点难目前没思路）
+- [x] 获取所有分词结果所对应文档     wendang(index, pieces)
+```python
+getDataFilename(index, pieces)
+```
+- [x] 计算各个文档向量空间模型匹配程度&对所有文档得分排序  xiangliang(index, len(files), pieces, wendang)
+```python
+getScoreList(index, file_num, pieces, file_list)
+```
+- [x] 输出前X项文档，得分，title，日期，url，匹配内容
+
+<img src="https://cdn.jsdelivr.net/gh/Wang-Mingri/Pic/PicGo/2022/06/04/20220604-1654323874.png" alt="image-20220604142434131" style="zoom:50%;" />
 
 ---
 
