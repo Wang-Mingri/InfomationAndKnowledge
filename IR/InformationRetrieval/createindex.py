@@ -21,7 +21,7 @@ def getFlashBackTable(content, index, doc_id):
     return index
 
 
-def buildIndex():
+def createIndex():
     index = {}
     index_title = {}
     files = os.listdir('data/')
@@ -36,8 +36,8 @@ def buildIndex():
     index_sorted = sortDict(index)
     index_title_sorted = sortDict(index_title)
     # 创建词项列表
-    word_list = buildWordList(index_sorted)
-    word_list_title = buildWordList(index_title_sorted)
+    word_list = createWordList(index_sorted)
+    word_list_title = createWordList(index_title_sorted)
 
     # 将数据写入文件中
     writeToFile(index, 'json文件/index.json')
@@ -62,7 +62,7 @@ def sortDict(dict):
     return sdict
 
 
-def buildWordList(inverted_index):
+def createWordList(inverted_index):
     word_list = []
     for word in inverted_index.keys():
         word_list.append(word)
