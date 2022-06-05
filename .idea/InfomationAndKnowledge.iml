@@ -4,8 +4,21 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/examples" />
+      <excludeFolder url="file://$MODULE_DIR$/Reference/novel-searchengine-master/novel-searchengine-master/indexrequest/.idea/ZeppelinRemoteNotebooks" />
+      <excludeFolder url="file://$MODULE_DIR$/Reference/SearchingSystem-master/SearchSystem/.idea/ZeppelinRemoteNotebooks" />
+      <excludeFolder url="file://$MODULE_DIR$/Reference/SearchLab-main/SearchLab-main/.idea/inspectionProfiles" />
+      <excludeFolder url="file://$MODULE_DIR$/Reference/TouristScenicSpotSearchEngine-master/TouristScenicSpotSearchEngine-master/.idea/ZeppelinRemoteNotebooks" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/ZeppelinRemoteNotebooks" />
+      <excludeFolder url="file://$MODULE_DIR$/Reference" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/IR/InformationRetrieval" />
+      </list>
+    </option>
   </component>
 </module>

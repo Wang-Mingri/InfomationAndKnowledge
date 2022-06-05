@@ -1,0 +1,8 @@
+# jetbrains
+venv/
+.idea/*
+*/__pycache__/*
+
+# others
+*.pyc
+Reference/
