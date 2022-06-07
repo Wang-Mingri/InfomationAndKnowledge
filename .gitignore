@@ -1,5 +1,5 @@
 # jetbrains
-venv/
+*/venv/
 .idea/*
 */__pycache__/*
 

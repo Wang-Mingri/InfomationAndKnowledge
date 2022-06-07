@@ -11,7 +11,7 @@ def getSentenceAndTimeRange():
     print("请输入待查询语句:")
     sentence = input()
 
-    # TODO: 查询时间范围
+
     start_str = input("请输入查询起始时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
     end_str = input("请输入查询终止时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
     return sentence , [start_str, end_str]
@@ -57,10 +57,10 @@ if __name__ == '__main__':
         spider()
 
     # 若不存在倒叙索引表 或者 创建时间早于data 则创建倒叙索引表
-    if not os.path.exists('index.json') or not os.path.exists('wordlist.json'):
+    if not os.path.exists('json文件/index.json') or not os.path.exists('json文件/wordlist.json'):
         createIndex()
     else:
-        index_time = time.localtime(os.stat("wordlist.json").st_mtime)
+        index_time = time.localtime(os.stat("json文件/wordlist.json").st_mtime)
         data_time = time.localtime(os.stat(f"data/{os.listdir('data/')[0]}").st_mtime)
         if index_time < data_time:
             createIndex()

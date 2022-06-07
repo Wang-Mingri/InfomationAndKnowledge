@@ -10,8 +10,9 @@
       <excludeFolder url="file://$MODULE_DIR$/Reference/TouristScenicSpotSearchEngine-master/TouristScenicSpotSearchEngine-master/.idea/ZeppelinRemoteNotebooks" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/ZeppelinRemoteNotebooks" />
       <excludeFolder url="file://$MODULE_DIR$/Reference" />
+      <excludeFolder url="file://$MODULE_DIR$/IE/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (Python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (InfomationAndKnowledge)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyNamespacePackagesService">
