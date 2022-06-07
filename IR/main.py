@@ -1,7 +1,7 @@
 import os.path
 import time
 
-from IR.Spider import spider
+from IR.Spider.spider import spider
 from InformationRetrieval.VSM import *
 from InformationRetrieval.createindex import *
 from InformationRetrieval.tokens import *
@@ -57,10 +57,10 @@ if __name__ == '__main__':
         spider()
 
     # 若不存在倒叙索引表 或者 创建时间早于data 则创建倒叙索引表
-    if not os.path.exists('index.json') or not os.path.exists('wordlist.json'):
+    if not os.path.exists('json文件/index.json') or not os.path.exists('json文件/wordlist.json'):
         createIndex()
     else:
-        index_time = time.localtime(os.stat("wordlist.json").st_mtime)
+        index_time = time.localtime(os.stat("json文件/wordlist.json").st_mtime)
         data_time = time.localtime(os.stat(f"data/{os.listdir('data/')[0]}").st_mtime)
         if index_time < data_time:
             createIndex()
