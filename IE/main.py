@@ -8,8 +8,8 @@ def test():
 
     HanLP = hanlp.load(hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_DEP_SDP_CON_ELECTRA_BASE_ZH)
 
-    text = json.loads(open('../IR/data/2022-03-02-08-00.json', 'r').read())
-    doc = HanLP([text["正文"]], tasks='ner/ontonotes')
+    text = json.loads(open('data/2_3.json', 'r').read())
+    doc = HanLP([text["文本"]])
     print(doc)
     file = open("1text.txt", 'w')
     file.write(str(doc))
@@ -19,3 +19,4 @@ if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
     if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
         spider()
+    test()
