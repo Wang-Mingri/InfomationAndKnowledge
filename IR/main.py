@@ -11,7 +11,7 @@ def getSentenceAndTimeRange():
     print("请输入待查询语句:")
     sentence = input()
 
-    # TODO: 查询时间范围
+
     start_str = input("请输入查询起始时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
     end_str = input("请输入查询终止时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
     return sentence , [start_str, end_str]
