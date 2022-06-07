@@ -1,7 +1,7 @@
 import os.path
 import time
 
-from IR.Spider.spider import spider
+from Spider.spider import *
 from InformationRetrieval.VSM import *
 from InformationRetrieval.createindex import *
 from InformationRetrieval.tokens import *
