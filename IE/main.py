@@ -43,16 +43,17 @@ def output(json_file):
                 value_str = value
 
             if len(value_str) != 0:
-                print('{a}:{b}'.format(a=key, b=value_str))
-        print("输出完毕。", end='\n\n')
+                print('\033[4m{a}\033[0m:{b}'.format(a=key, b=value_str))
+        print("\n\033[32m输出完毕。\033[0m\n\n")
     except FileNotFoundError:
-        print(f"未找到目标文件: json_file")
+        print(f"\n\033[31m未找到目标文件: json_file")
+        print("请更改目标重试\033[0m\n")
 
 
 if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
-    if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
-        spider()
+    # if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
+    #     spider()
 
     dict = {}
     for filename in os.listdir('data/'):
@@ -66,4 +67,4 @@ if __name__ == '__main__':
     while True:
         page = input("请输入待抽取文本所在页码(回车代表对所有页面进行查询): ")
         segment = input("请输入指定页面上的待抽取文件所在位置(回车代表对指定页面所有项目进行查询): ")
-        output(f'data/{page}_{segment}.json')
+        output(f'result/IE_{page}_{segment}.json')
