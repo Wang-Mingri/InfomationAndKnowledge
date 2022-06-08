@@ -7,4 +7,4 @@ def participle(filename):
 
 
     data_part = {}
-    json.dump(data_part, f"json文件/part_{filename}","w")
+    json.dump(data_part, f"json文件/part_{filename}", "w")
