@@ -4,11 +4,8 @@ import os
 from Spider.spider import *
 from InformationExtraction.participle import *
 from InformationExtraction.regularmatch import *
-<<<<<<< HEAD
-=======
 
 HanLP = hanlp.load(hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_DEP_SDP_CON_ELECTRA_BASE_ZH)
->>>>>>> 16bf1cca5ac241e0580b34b051c3e11d1a1130cf
 
 
 def get_value(origin_list, label):

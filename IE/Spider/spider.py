@@ -60,7 +60,8 @@ def spider():
                 pass
 
             if len(strong_list) + len(span_list) != 0:
-                dict["强调文本"] = '\n'.join(strong_list + span_list)
+                # dict["强调文本"] = '\n'.join(strong_list + span_list)
+                dict["强调文本"] = strong_list + span_list
                 print(dict["强调文本"])
 
             dict["网址"] = target_url
