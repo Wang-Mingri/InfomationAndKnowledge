@@ -15,7 +15,7 @@ def spider():
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33"}
 
     print("开始爬取数据")
-    for page in range(20, 1, -1):
+    for page in range(1, 20):
         if page == 1:
             content_url = f"{content_label}.htm"
         else:
@@ -23,9 +23,9 @@ def spider():
         content_get = requests.get(content_url, headers=headers)
         content_html = etree.HTML(content_get.text, etree.HTMLParser())
 
-        for i in range(1, 20):
+        for i in range(1, 21):
             # 可检测文章是否存在若存在则跳过
-            if os.path.exists(f"data/{page}_{i}.json"):
+            if os.path.exists(f"../data/{page}_{i}.json"):
                 continue
             print(f"Getting Page {page} Section {i}")
             # >>> print(html.xpath("/html/body/div[1]/div/div[2]/div[2]/ul/ul/li[1]/p[1]/a/@href")[0])
