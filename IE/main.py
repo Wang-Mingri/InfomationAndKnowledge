@@ -3,6 +3,9 @@ import json
 import os
 from Spider.spider import *
 from InformationExtraction.participle import *
+from InformationExtraction.regularmatch import *
+
+HanLP = hanlp.load(hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_DEP_SDP_CON_ELECTRA_BASE_ZH)
 
 
 def get_value(origin_list, label):
@@ -14,28 +17,35 @@ def get_value(origin_list, label):
     return result_str
 
 
-def test():
-    hanlp.pretrained.mtl.ALL  # MTL多任务，具体任务见模型名称，语种见名称最后一个字段或相应语料库
-
-    HanLP = hanlp.load(hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_DEP_SDP_CON_ELECTRA_BASE_ZH)
-
-    for page in range(1, 16):
-        for section in range(1, 21):
-            text = json.loads(open(f'data/{page}_{section}.json', 'r').read())
-            organization = get_value(HanLP(text["标题"], tasks="ner/msra"), 'ORGANIZATION')
-            location_segment = text["文本"].split('：')[0]
-            location = get_value(HanLP(location_segment, tasks="ner/msra"), 'LOCATION')
-            time = text["时间"]
-            strong = ""
-            try:
-                strong = text["强调文本"]
-            except:
-                pass
-            print(f"Processing Page{page} Section{section}", organization, location, time, strong, end="\n\n-------------\n\n")
+def getKeywordsFromHanlp(filename):
+    text = json.loads(open(filename, 'r').read())
+    organization = get_value(HanLP(text["标题"], tasks="ner/msra"), 'ORGANIZATION')
+    location_segment = text["文本"].split('：')[0]
+    location = get_value(HanLP(location_segment, tasks="ner/msra"), 'LOCATION')
+    time = text["时间"]
+    strong = []
+    try:
+        strong = text["强调文本"]
+    except:
+        pass
+    print(f"Processing Page{page} Section{section}", end='\n\n')
+    return [organization, location, time, strong]
 
 
 if __name__ == '__main__':
-    test()
+
+    # 若数据未爬取或者爬取文档数目小于100 重新爬取
+    if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
+        spider()
+
+
+    dict = {}
+    for page in range(1, 16):
+        for section in range(1, 21):
+            filename = f'data/{page}_{section}.json'
+            keyword = getKeywordsFromHanlp(filename)
+
+
     # # 若数据未爬取或者爬取文档数目小于100 重新爬取
     # if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
     #     spider()
@@ -58,5 +68,3 @@ if __name__ == '__main__':
     # # 政府部门类别：
     # # 相关法律法规：
     # # 具体解决方法：
-
-
