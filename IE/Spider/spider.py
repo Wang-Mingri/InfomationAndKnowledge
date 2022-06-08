@@ -45,7 +45,10 @@ def spider():
 
             dict = {}
             dict["标题"] = browser.find_element(by=By.XPATH, value='/html/body/div[2]/div[1]/div[2]/div/h1').text # 获取文章标题
-            dict["时间"] = browser.find_element(by=By.XPATH, value='//*[@class="pages-date"]').text[0:len("YYYY-MM-DD HH:MM")] # 获取文章时间
+            time = browser.find_element(by=By.XPATH, value='//*[@class="pages-date"]').text[0:len("YYYY-MM-DD HH:MM")] # 获取文章时间
+            if time[0:2] == '20':
+                dict["时间"] = time
+
             dict["文本"] = browser.find_element(by=By.XPATH, value='//*[@id="UCAP-CONTENT"]').text # 获取文章正文
             strong_list = span_list = []
             try:
