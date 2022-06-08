@@ -23,10 +23,7 @@ def getKeywordsFromHanlp(filename):
         strong = text["强调文本"]
     except:
         pass
-    dict = {}
-    dict["位置"] = location
-    dict["时间"] = time
-    dict["部门"] = organization
-    dict["强调文本"] = strong
+    url = text["网址"]
+    dict = {"位置": location, "时间": time, "部门": organization, "强调文本": strong, "网址": url}
     return dict
 
