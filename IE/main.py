@@ -39,10 +39,10 @@ def output(page, segment):
 
 if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
-    if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
+    if not (os.path.exists('data/') or len(os.listdir('data/')) > 100):
         spider()
 
-    if not (os.path.exists('result/') | len(os.listdir('result/')) == len(os.listdir('data/'))):
+    if not (os.path.exists('result/') and len(os.listdir('result/')) == len(os.listdir('data/'))):
         dict = {}
         for filename in os.listdir('data/'):
             if os.path.exists(f'result/IE_{filename}'):

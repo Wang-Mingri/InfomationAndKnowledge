@@ -1,6 +1,6 @@
 import json
 import os
-from InformationRetrieval import tokens
+from IR.InformationRetrieval.tokens import *
 from itertools import chain
 from pypinyin import pinyin, Style
 
@@ -27,8 +27,8 @@ def createIndex():
     files = os.listdir('data/')
     for file in files:
         doc_id = files.index(file)  # 获取文件的索引号
-        content = tokens.getToken(file)  # 获取json文件内容
-        title = tokens.getToken(file, title=1)  # 获取json文件标题
+        content = getToken(file)  # 获取json文件内容
+        title = getToken(file, title=1)  # 获取json文件标题
         index = getFlashBackTable(content, index, doc_id)
         index_title = getFlashBackTable(title, index_title, doc_id)
 
