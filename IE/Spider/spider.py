@@ -15,7 +15,7 @@ def spider():
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33"}
 
     print("开始爬取数据")
-    for page in range(1, 20):
+    for page in range(2, 3):
         if page == 1:
             content_url = f"{content_label}.htm"
         else:
@@ -23,7 +23,7 @@ def spider():
         content_get = requests.get(content_url, headers=headers)
         content_html = etree.HTML(content_get.text, etree.HTMLParser())
 
-        for i in range(1, 21):
+        for i in range(18, 19):
             # 可检测文章是否存在若存在则跳过
             if os.path.exists(f"../data/{page}_{i}.json"):
                 continue
@@ -47,10 +47,23 @@ def spider():
             dict["标题"] = browser.find_element(by=By.XPATH, value='/html/body/div[2]/div[1]/div[2]/div/h1').text # 获取文章标题
             dict["时间"] = browser.find_element(by=By.XPATH, value='//*[@class="pages-date"]').text[0:len("YYYY-MM-DD HH:MM")] # 获取文章时间
             dict["文本"] = browser.find_element(by=By.XPATH, value='//*[@id="UCAP-CONTENT"]').text # 获取文章正文
+            strong_list = span_list = []
             try:
-                dict["强调文本"] = browser.find_element(by=By.TAG_NAME, value='strong').text # 获取文章加粗正文
+                strong_pieces = browser.find_elements(by=By.TAG_NAME, value='strong') # 获取文章加粗正文
+                strong_list = [piece.text for piece in strong_pieces]
             except NoSuchElementException:
                 pass
+            try:
+                span_pieces = browser.find_elements(by=By.CSS_SELECTOR, value='span[style="font-weight: bold;"]')
+                span_list = [piece.text for piece in span_pieces]
+            except NoSuchElementException:
+                pass
+
+            if len(strong_list) + len(span_list) != 0:
+                dict["强调文本"] = '\n'.join(strong_list + span_list)
+                print(dict["强调文本"])
+
+            dict["网址"] = target_url
 
             with open(f"../data/{page}_{i}.json", 'w') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
