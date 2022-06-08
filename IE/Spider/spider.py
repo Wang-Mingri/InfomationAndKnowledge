@@ -15,7 +15,7 @@ def spider():
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33"}
 
     print("开始爬取数据")
-    for page in range(1, 24):
+    for page in range(20, 1, -1):
         if page == 1:
             content_url = f"{content_label}.htm"
         else:
@@ -27,7 +27,7 @@ def spider():
             # 可检测文章是否存在若存在则跳过
             if os.path.exists(f"data/{page}_{i}.json"):
                 continue
-            # print(i)
+            print(f"Getting Page {page} Section {i}")
             # >>> print(html.xpath("/html/body/div[1]/div/div[2]/div[2]/ul/ul/li[1]/p[1]/a/@href")[0])
             # /hudong/2022-05/24/content_5692015.htm
             path = "/html/body/div[1]/div/div[5]/div[1]/ul" # /li[1]
@@ -41,6 +41,7 @@ def spider():
                 service=Service("C:\Program Files (x86)\Microsoft\Edge\Application\msedgedriver.exe"),
                 options=edge_options)
             browser.get(target_url)
+            print(target_url)
 
             dict = {}
             dict["标题"] = browser.find_element(by=By.XPATH, value='/html/body/div[2]/div[1]/div[2]/div/h1').text # 获取文章标题
@@ -51,8 +52,11 @@ def spider():
             except NoSuchElementException:
                 pass
 
-            with open(f"data/{page}_{i}.json", 'w') as write_f:
+            with open(f"../data/{page}_{i}.json", 'w') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
-    browser.close()
+    # browser.close()
     print("生成成功！")
+
+if __name__ == '__main__':
+    spider()
