@@ -3,7 +3,7 @@ import json
 
 
 def cut_sentences(content):
-    sentences = re.split(r'(\!|\?|。|！|？|：)', content)
+    sentences = re.split(r'(\!|\?|。|！|？|：|\n)', content)
     return sentences
 
 
@@ -15,22 +15,25 @@ def regularmatch(filename):
     dir["相关法律"] = []
     dir["手机尾号"] = []
     for i in content:
-        if re.match(r'.*网民“(.*)”.*', i, re.M | re.I):
+        if re.match(r'.*网民“(.*)”.*', i, re.M | re.I)!= None:
             dir["网名"].append(re.match(r'.*网民“(.*)”.*', i, re.M | re.I).group(1)) # 获取 网名
-        elif re.match( r'(.*)说：.*', i, re.M|re.I):
-            dir["网名"].append(re.match( r'(.*)说：.*', i, re.M|re.I).group(1))
-        if re.match( r'.*(《.*》).*', i, re.M|re.I):
-            dir["相关法律"].append({}.fromkeys(re.match( r'.*(《.*》).*', i, re.M|re.I).group(1)).keys()) # 获取 相关法律 并去重
-        if re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I):
+        elif re.match( r'(.*)说.*', i, re.M|re.I)!= None:
+            dir["网名"].append(re.match( r'(.*)说.*', i, re.M|re.I).group(1))
+
+        if re.match( r'.*(《.*》).*', i, re.M|re.I)!= None:
+            dir["相关法律"].append(re.match( r'.*(《.*》).*', i, re.M|re.I).group(1)) # 获取 相关法律
+        if re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I)!= None:
             dir["手机尾号"].append(re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I).group(1)) # 获取手机尾号后四位
 
+    dir["相关法律"] = set(dir["相关法律"]) #  去重
     return dir
 
 
 
-
+'根据《公司登记管理条例》第九、第十二、第二十条规定，住所是公司的法定登记事项，公司的住所是公司主要办事机构所在地，公司的住所应当在其公司登记机关辖区内'
+'2014年2月，国务院印发了《注册资本登记制度改革方案》（国发〔2014〕7号）'
 # 获取 相关法律
-# line = "国务院办公厅印发《推进运输结构调整三年行动计划（2018—2020年）》"
+# line = "014年2月，国务院印发了《注册资本登记制度改革方案》（国发〔2014〕7号）"
 # matchObj = re.match( r'.*(《.*》).*', line, re.M|re.I)
 # if matchObj:
 #     print ("matchObj.group() : ", matchObj.group())
@@ -40,7 +43,7 @@ def regularmatch(filename):
 
 
 # 获取 网名
-# line = "竹水说：总理您好"
+# line = "丽丽说：我是一名下岗职工，"
 # matchObj = re.match( r'(.*)说：.*', line, re.M|re.I)
 # if matchObj:
 #     print ("matchObj.group() : ", matchObj.group())

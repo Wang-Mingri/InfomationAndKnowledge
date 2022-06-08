@@ -3,34 +3,6 @@ import os
 from Spider.spider import *
 from InformationExtraction.participle import *
 from InformationExtraction.regularmatch import *
-
-HanLP = hanlp.load(hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_DEP_SDP_CON_ELECTRA_BASE_ZH)
-
-
-def get_value(origin_list, label):
-    token_list = origin_list["ner/msra"]
-    result_str = ""
-    for token in token_list:
-        if token[1] == label:
-            result_str += token[0]
-    return result_str
-
-
-def getKeywordsFromHanlp(filename):
-    text = json.loads(open(filename, 'r').read())
-    organization = get_value(HanLP(text["标题"], tasks="ner/msra"), 'ORGANIZATION')
-    location_segment = text["文本"].split('：')[0]
-    location = get_value(HanLP(location_segment, tasks="ner/msra"), 'LOCATION')
-    time = text["时间"]
-    strong = []
-    try:
-        strong = text["强调文本"]
-    except:
-        pass
-    print(f"Processing Page Section", end='\n\n')
-    return [organization, location, time, strong]
-
-
 def output(json_file):
     try:
         dict = json.loads(open(json_file, 'r').read())
@@ -57,14 +29,15 @@ if __name__ == '__main__':
     if not (os.path.exists('result/') | len(os.listdir('result/')) == len(os.listdir('data/'))):
         dict = {}
         for filename in os.listdir('data/'):
+            if(os.path.exists(f'result/IE_{filename}')):
+                continue
             dict = regularmatch(filename)
             dict.update(getKeywordsFromHanlp(filename))
             with open(f"result/IE_{filename}", 'w') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
-
     print("************************************信息抽取系统************************************")
     while True:
         page = input("请输入待抽取文本所在页码(回车代表对所有页面进行查询): ")
         segment = input("请输入指定页面上的待抽取文件所在位置(回车代表对指定页面所有项目进行查询): ")
-        output(f'data/{page}_{segment}.json')
+        output(f'result/IE_{page}_{segment}.json')
