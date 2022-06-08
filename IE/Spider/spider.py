@@ -25,7 +25,7 @@ def spider():
 
         for i in range(18, 19):
             # 可检测文章是否存在若存在则跳过
-            if os.path.exists(f"../data/{page}_{i}.json"):
+            if os.path.exists(f"data/{page}_{i}.json"):
                 continue
             print(f"Getting Page {page} Section {i}")
             # >>> print(html.xpath("/html/body/div[1]/div/div[2]/div[2]/ul/ul/li[1]/p[1]/a/@href")[0])
@@ -41,7 +41,7 @@ def spider():
                 service=Service("C:\Program Files (x86)\Microsoft\Edge\Application\msedgedriver.exe"),
                 options=edge_options)
             browser.get(target_url)
-            print(target_url)
+            # print(target_url)
 
             dict = {}
             dict["标题"] = browser.find_element(by=By.XPATH, value='/html/body/div[2]/div[1]/div[2]/div/h1').text # 获取文章标题
@@ -62,15 +62,12 @@ def spider():
             if len(strong_list) + len(span_list) != 0:
                 # dict["强调文本"] = '\n'.join(strong_list + span_list)
                 dict["强调文本"] = strong_list + span_list
-                print(dict["强调文本"])
+                # print(dict["强调文本"])
 
             dict["网址"] = target_url
 
-            with open(f"../data/{page}_{i}.json", 'w') as write_f:
+            with open(f"data/{page}_{i}.json", 'w') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
     # browser.close()
     print("生成成功！")
-
-if __name__ == '__main__':
-    spider()
