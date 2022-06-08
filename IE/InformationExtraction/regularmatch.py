@@ -10,22 +10,27 @@ def cut_sentences(content):
 def regularmatch(filename):
     data = json.load(open(f"data/{filename}", "r"));
     content = cut_sentences(data["文本"]) # 对文本分句
+    title = data["标题"]
     dir = {}
     dir["网名"] = []
     dir["相关法律"] = []
     dir["手机尾号"] = []
+    dir["留言"] = re.match(r'.*关于(.*)的[留言建议]{2}', title, re.M | re.I).group(1).strip('”')
     for i in content:
         if re.match(r'.*网民“(.*)”.*', i, re.M | re.I)!= None:
             dir["网名"].append(re.match(r'.*网民“(.*)”.*', i, re.M | re.I).group(1)) # 获取 网名
         elif re.match( r'(.*)$说', i, re.M|re.I)!= None:
             dir["网名"].append(re.match( r'(.*)$说', i, re.M|re.I).group(1))
 
-        if re.match( r'.*(《.*》).*', i, re.M|re.I)!= None:
-            dir["相关法律"].append(re.match( r'.*(《.*》).*', i, re.M|re.I).group(1)) # 获取 相关法律
         if re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I)!= None:
             dir["手机尾号"].append(re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I).group(1)) # 获取手机尾号后四位
 
+        if re.match( r'.*(《.*》).*', i, re.M|re.I)!= None:
+            dir["相关法律"].append(re.match( r'.*(《.*》).*', i, re.M|re.I).group(1)) # 获取 相关法律
+
+
     dir["相关法律"] = list(set(dir["相关法律"])) #  去重
+
     return dir
 
 

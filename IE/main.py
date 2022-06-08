@@ -49,9 +49,8 @@ if __name__ == '__main__':
                 continue
             dict = regularmatch(filename)
             dict.update(getKeywordsFromHanlp(filename))
-            print(f'result/IE_{filename}')
-            for key, value in dict.items():
-                print('{key}:{value}'.format(key = key, value = value))
+            # for key, value in dict.items():
+                # print('{key}:{value}'.format(key = key, value = value))
             with open(f"result/IE_{filename}", 'w') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
