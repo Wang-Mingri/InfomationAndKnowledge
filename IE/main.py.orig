@@ -21,6 +21,7 @@ def test():
 
 if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
+<<<<<<< HEAD
     if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
         spider()
     # TODO 分词输出到 json文件
@@ -40,3 +41,8 @@ if __name__ == '__main__':
     # 相关法律法规：
     # 具体解决方法：
 
+=======
+    # if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
+    #     spider()
+    test()
+>>>>>>> ba6e872fe9b923ced62c306db139d5708e328ee4
