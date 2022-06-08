@@ -1,8 +1,10 @@
+import os
 import requests
 from lxml import etree
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 import json
 
@@ -22,6 +24,9 @@ def spider():
         content_html = etree.HTML(content_get.text, etree.HTMLParser())
 
         for i in range(1, 20):
+            # 可检测文章是否存在若存在则跳过
+            if os.path.exists(f"data/{page}_{i}.json"):
+                continue
             # print(i)
             # >>> print(html.xpath("/html/body/div[1]/div/div[2]/div[2]/ul/ul/li[1]/p[1]/a/@href")[0])
             # /hudong/2022-05/24/content_5692015.htm
@@ -30,11 +35,16 @@ def spider():
             target_url = domain_name + str(content_html.xpath(f"{path}/li[{2*i-1}]{new_page_label}")[0])# 获取文章的url
 
             # 使用selenium自动化抓取文章内容
-            browser = webdriver.Edge(service=Service("C:\Program Files (x86)\Microsoft\Edge\Application\msedgedriver.exe"))
+            edge_options = Options()
+            edge_options.add_argument('--headless')
+            browser = webdriver.Edge(
+                service=Service("C:\Program Files (x86)\Microsoft\Edge\Application\msedgedriver.exe"),
+                options=edge_options)
             browser.get(target_url)
 
             dict = {}
             dict["标题"] = browser.find_element(by=By.XPATH, value='/html/body/div[2]/div[1]/div[2]/div/h1').text # 获取文章标题
+            dict["时间"] = browser.find_element(by=By.XPATH, value='//*[@class="pages-date"]').text[0:len("YYYY-MM-DD HH:MM")] # 获取文章时间
             dict["文本"] = browser.find_element(by=By.XPATH, value='//*[@id="UCAP-CONTENT"]').text # 获取文章正文
             try:
                 dict["强调文本"] = browser.find_element(by=By.TAG_NAME, value='strong').text # 获取文章加粗正文
