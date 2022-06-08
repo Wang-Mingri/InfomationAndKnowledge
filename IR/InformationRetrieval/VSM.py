@@ -1,7 +1,7 @@
 import cmath
 import json
 import os
-from InformationRetrieval import tokens
+from IR.InformationRetrieval.tokens import *
 from datetime import datetime
 
 
@@ -74,7 +74,7 @@ def printResult(reports, search_pieces, time_range, title_flag=0, content_flag=0
         # print(file_name)
 
         # print(text["标题"])
-        title_pieces = list(tokens.getToken(text["标题"], 1))
+        title_pieces = list(getToken(text["标题"], 1))
         # title_flag 为查询标题的标志，默认查询
         if not title_flag:
             print("标题: ", end="")
@@ -93,7 +93,7 @@ def printResult(reports, search_pieces, time_range, title_flag=0, content_flag=0
 
         # content_flag 为查询正文的标志，默认查询
         if not content_flag:
-            content = list(tokens.getToken(file_name))
+            content = list(getToken(file_name))
             i = 0
             output_len = 0
             while i != len(content) and output_len <= 50:
