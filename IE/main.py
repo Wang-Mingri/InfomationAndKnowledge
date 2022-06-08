@@ -9,12 +9,13 @@ if __name__ == '__main__':
     if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
         spider()
 
-    dict = {}
-    for filename in os.listdir('data/'):
-        dict = regularmatch(filename)
-        dict.update(getKeywordsFromHanlp(filename))
-        with open(f"result/{filename}_IE.json", 'w') as write_f:
-            json.dump(dict, write_f, indent=4, ensure_ascii=False)
+    if not (os.path.exists('result/') | len(os.listdir('result/')) == len(os.listdir('data/'))):
+        dict = {}
+        for filename in os.listdir('data/'):
+            dict = regularmatch(filename)
+            dict.update(getKeywordsFromHanlp(filename))
+            with open(f"result/IE_{filename}", 'w') as write_f:
+                json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
 
     # # TODO 分词输出到 json文件
