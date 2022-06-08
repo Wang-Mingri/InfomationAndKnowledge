@@ -3,6 +3,7 @@ import json
 import os
 from Spider.spider import *
 from InformationExtraction.participle import *
+from InformationExtraction.regularmatch import *
 
 
 def get_value(origin_list, label):
