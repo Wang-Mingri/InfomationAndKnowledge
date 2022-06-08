@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 plt.rcParams['font.sans-serif'] = 'SimHei'
 plt.rcParams['axes.unicode_minus'] = False
 
-file_path = '../data/'
+file_path = 'data/'
 
 
 # 对目录页面索引，寻找所需要内容网页的网址
@@ -70,7 +70,7 @@ def getArticle(url_html):
 
 def spider():
     init_url = 'http://www.olympic.cn/news/olympic_comm/'
-    for i in range(1, 10):
+    for i in range(1, 50):
         tail = f'list_407_{i}.html'
         html_list = getURL(init_url + tail)
         for j in html_list:
