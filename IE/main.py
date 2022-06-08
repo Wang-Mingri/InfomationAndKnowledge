@@ -3,8 +3,6 @@ import os
 from Spider.spider import *
 from InformationExtraction.participle import *
 from InformationExtraction.regularmatch import *
-
-
 def output(page, segment):
     print("信息点抽取开始:\n")
     if page == '':
