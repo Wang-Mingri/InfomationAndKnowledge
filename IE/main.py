@@ -3,6 +3,8 @@ import os
 from Spider.spider import *
 from InformationExtraction.participle import *
 from InformationExtraction.regularmatch import *
+
+
 def output(page, segment):
     print("信息点抽取开始:\n")
     if page == '':
@@ -39,18 +41,19 @@ def output(page, segment):
 
 if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
-    # if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
-    #     spider()
+    if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
+        spider()
 
-    # if not (os.path.exists('result/') | len(os.listdir('result/')) == len(os.listdir('data/'))):
-    #     dict = {}
-    #     for filename in os.listdir('data/'):
-            if(os.path.exists(f'result/IE_{filename}')):
+    if not (os.path.exists('result/') | len(os.listdir('result/')) == len(os.listdir('data/'))):
+        dict = {}
+        for filename in os.listdir('data/'):
+            if os.path.exists(f'result/IE_{filename}'):
                 continue
-    #         dict = regularmatch(filename)
-    #         dict.update(getKeywordsFromHanlp(filename))
-    #         with open(f"result/IE_{filename}", 'w') as write_f:
-    #             json.dump(dict, write_f, indent=4, ensure_ascii=False)
+            dict = regularmatch(filename)
+            dict.update(getKeywordsFromHanlp(filename))
+            print(f'result/IE_{filename}')
+            with open(f"result/IE_{filename}", 'w') as write_f:
+                json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
     print("************************************信息抽取系统************************************")
     while True:
