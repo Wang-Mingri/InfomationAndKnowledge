@@ -6,4 +6,9 @@
 # others
 *.pyc
 Reference/
-IE/*.orig
+*/*.orig
+*/*/*.orig
+*/*/*/*.orig
+# data
+*.json
+
