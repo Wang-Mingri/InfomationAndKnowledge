@@ -30,5 +30,5 @@ def getKeywordsFromHanlp(filename):
         pass
 
     url = text["网址"]
-    dict = {"位置": location, "时间": time, "部门": organization, "强调文本": strong, "网址": url}
+    dict = {"部门": organization, "强调文本": strong, "时间": time, "位置": location,"网址": url}
     return dict

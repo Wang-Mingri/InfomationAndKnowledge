@@ -39,7 +39,8 @@ def output(page, segment):
 
 if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
-    spider()
+    if not (os.path.exists('data/') and len(os.listdir('data/')) > 100):
+        spider()
 
     if not (os.path.exists('result/') and len(os.listdir('result/')) == len(os.listdir('data/'))):
         dict = {}

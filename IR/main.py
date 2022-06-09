@@ -53,11 +53,11 @@ def fun3(index, files, sentence, time_range):
 
 if __name__ == '__main__':
     # 若数据未爬取或者爬取文档数目小于100 重新爬取
-    if not (os.path.exists('data/') | len(os.listdir('data/')) > 100):
+    if not (os.path.exists('data/') and len(os.listdir('data/')) > 100):
         spider()
 
     # 若不存在倒叙索引表 或者 创建时间早于data 则创建倒叙索引表
-    if not os.path.exists('json文件/index.json') or not os.path.exists('json文件/wordlist.json'):
+    if not (os.path.exists('json文件/index.json') and os.path.exists('json文件/wordlist.json')):
         createIndex()
     else:
         index_time = time.localtime(os.stat("json文件/wordlist.json").st_mtime)
