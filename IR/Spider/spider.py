@@ -52,16 +52,16 @@ def getArticle(url_html):
     response.encoding = 'utf-8'  # 更改编码 否则获取text乱码
     html = etree.HTML(response.text, etree.HTMLParser())
     try:
-        title = html.xpath('/html/body/div[2]/div[4]/div[1]/div/h2/font/text()')[0]
-        time = html.xpath('/html/body/div[2]/div[4]/div[1]/div/div[1]/div[1]/text()')[0]
-        content_result = html.xpath('/html/body/div[2]/div[4]/div[1]/div/div[2]/p')
+        title = html.xpath('/html/body/div[2]/div[4]/div[1]/div/h2/font/text()')[0] # 获取标题
+        time = html.xpath('/html/body/div[2]/div[4]/div[1]/div/div[1]/div[1]/text()')[0] # 获取时间
+        content_result = html.xpath('/html/body/div[2]/div[4]/div[1]/div/div[2]/p') # 获取正文
         content = []
         for p in content_result:
             content.append(p.xpath('./text()')[0])  # 获取到内容
-        url = url_html
+        url = url_html # 获取url
 
-        html_dict = getDict(title, time, '\n'.join(content), url)
-        with open(f"{file_path}{'-'.join(time.split()).replace(':', '-')}.json", 'w') as write_f:
+        html_dict = getDict(title, time, '\n'.join(content), url) # 将以上信息转换为字典格式
+        with open(f"{file_path}{'-'.join(time.split()).replace(':', '-')}.json", 'w') as write_f: # 存入json格式文件
             json.dump(html_dict, write_f, indent=4, ensure_ascii=False)
 
     except IndexError as e:

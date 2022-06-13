@@ -40,10 +40,10 @@ def createIndex():
     word_list_title = createWordList(index_title_sorted)
 
     # 将数据写入文件中
-    writeToFile(index, 'json文件/index.json')
-    writeToFile(word_list, 'json文件/wordlist.json')
-    writeToFile(index_title, 'json文件/index_title.json')
-    writeToFile(word_list_title, 'json文件/wordlist_title.json')
+    writeToFile(index, 'json/index.json')
+    writeToFile(word_list, 'json/wordlist.json')
+    writeToFile(index_title, 'json/index_title.json')
+    writeToFile(word_list_title, 'json/wordlist_title.json')
 
 
 def to_pinyin(s):
@@ -70,19 +70,19 @@ def createWordList(inverted_index):
 
 
 def writeToFile(data, filename):
-    with open(filename, 'w') as write_f:
+    with open(filename, 'w', encoding='UTF-8') as write_f:
         json.dump(data, write_f, indent=4, ensure_ascii=False)
 
 
 # 获取倒叙索引表
 def getIndex(filename):
-    with open(f'{filename}', 'r') as index:
+    with open(f'{filename}', 'r', encoding='UTF-8') as index:
         index = json.load(index)
     return index
 
 
 # 获取词项列表
 def getWordList(filename):
-    with open(f'{filename}', 'r') as word_list:
+    with open(f'{filename}', 'r', encoding='UTF-8') as word_list:
         word_list = json.load(word_list)
     return word_list
