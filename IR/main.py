@@ -11,7 +11,6 @@ def getSentenceAndTimeRange():
     print("请输入待查询语句:")
     sentence = input()
 
-
     start_str = input("请输入查询起始时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
     end_str = input("请输入查询终止时间:（仅接受格式为{year}.{month}.{day}的时间，回车跳过）")
     return sentence , [start_str, end_str]
@@ -19,13 +18,13 @@ def getSentenceAndTimeRange():
 
 # 获取信息索引内容
 def getIR(index, files, sentence):
-    pieces = getToken(sentence, 1)  # sentence分词
+    pieces = getToken(sentence, 1)  #对sentence分词
     # print(*pieces)
-    pieces = deduplicate(pieces)
+    pieces = deduplicate(pieces) # 分词之后进行去重
     # print(*pieces)
-    file_list = getDataFilename(index, pieces)
+    file_list = getDataFilename(index, pieces) # 获取所有分词对应文档
     # print(*file_list)
-    reports = getScoreList(index, len(files), pieces, file_list)
+    reports = getScoreList(index, len(files), pieces, file_list) # 计算各个文档向量空间模型匹配程度&对所有文档得分排序
 
     return reports, pieces
 
@@ -57,20 +56,24 @@ if __name__ == '__main__':
         spider()
 
     # 若不存在倒叙索引表 或者 创建时间早于data 则创建倒叙索引表
-    if not (os.path.exists('json文件/index.json') and os.path.exists('json文件/wordlist.json')):
+    if not (os.path.exists('json/index.json') and os.path.exists('json/wordlist.json')):
         createIndex()
-    else:
-        index_time = time.localtime(os.stat("json文件/wordlist.json").st_mtime)
-        data_time = time.localtime(os.stat(f"data/{os.listdir('data/')[0]}").st_mtime)
-        if index_time < data_time:
-            createIndex()
+    else:# 若存在则比较更新时间  更新数据则进行更新index
+        file_list = []
+        for file in os.listdir('data/'):
+            index_time = time.localtime(os.stat("json/index.json").st_mtime)
+            data_time = time.localtime(os.stat(f"data/{file}").st_mtime)
+            if index_time < data_time:
+                file_list.append(file)
+        for file in file_list:
+            addIndex(file)
 
     # 获取倒排索引表 index
-    index = getIndex("json文件/index.json")
-    index_title = getIndex("json文件/index_title.json")
+    index = getIndex("json/index.json")
+    index_title = getIndex("json/index_title.json")
     # 获取倒排索引表词典 word_list
-    # word_list = getWordList("json文件/word_list.json")
-    # word_list_title = geiWordList("json文件/word_list_title.json")
+    # word_list = getWordList("json/word_list.json")
+    # word_list_title = geiWordList("json/word_list_title.json")
     # 获取文件列表
     files = os.listdir('data/')
 

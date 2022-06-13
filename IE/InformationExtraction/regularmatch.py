@@ -8,7 +8,7 @@ def cut_sentences(content):
 
 
 def regularmatch(filename):
-    data = json.load(open(f"data/{filename}", "r"));
+    data = json.load(open(f"data/{filename}", "r", encoding='UTF-8'));
     content = cut_sentences(data["文本"]) # 对文本分句
     title = data["标题"]
     dir = {}

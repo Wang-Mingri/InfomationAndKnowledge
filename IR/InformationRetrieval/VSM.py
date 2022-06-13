@@ -37,15 +37,15 @@ def getWfIdfScore(index, file_num, pieces, file_id):
     score = 0
     highlight = []
     file_id = str(file_id)
-    for piece in pieces:
+    for piece in pieces:# 依次对输入检索内容 去index里面匹配并计算得分
         if piece not in index or file_id not in index[piece]:
             continue
-        tf = len(index[piece][file_id])
-        df = len(index[piece])
-        wf = 1 + cmath.log10(tf).real
+        tf = len(index[piece][file_id]) # 计算tf
+        df = len(index[piece]) # 计算df
+        wf = 1 + cmath.log10(tf).real # 计算wf 去除词频对匹配得分的影响
         idf = cmath.log10(file_num / df).real
         score += wf * idf
-        highlight += index[piece][file_id]
+        highlight += index[piece][file_id] # 记录分词位置便于之后输出
     return [score, highlight]
 
 
@@ -62,7 +62,7 @@ def printResult(reports, search_pieces, time_range, title_flag=0, content_flag=0
     for report in reports:
         file_name = id2name(report[1])
         full_path = "data/" + file_name
-        text = json.loads(open(full_path, 'r').read())
+        text = json.loads(open(full_path, 'r',encoding='UTF-8').read())
 
         time = datetime.strptime(text["日期"], '%Y-%m-%d %H:%M')
 

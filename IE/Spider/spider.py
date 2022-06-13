@@ -69,7 +69,7 @@ def spider():
 
             dict["网址"] = target_url
 
-            with open(f"data/{page}_{i}.json", 'w') as write_f:
+            with open(f"data/{page}_{i}.json", 'w', encoding='UTF-8') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
     # browser.close()

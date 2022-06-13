@@ -51,7 +51,7 @@ if __name__ == '__main__':
             dict.update(getKeywordsFromHanlp(filename))
             # for key, value in dict.items():
                 # print('{key}:{value}'.format(key = key, value = value))
-            with open(f"result/IE_{filename}", 'w') as write_f:
+            with open(f"result/IE_{filename}", 'w', encoding='UTF-8') as write_f:
                 json.dump(dict, write_f, indent=4, ensure_ascii=False)
 
     print("************************************信息抽取系统************************************")
