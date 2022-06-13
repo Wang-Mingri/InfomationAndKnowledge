@@ -3,6 +3,9 @@ import os
 from Spider.spider import *
 from InformationExtraction.participle import *
 from InformationExtraction.regularmatch import *
+import time
+
+
 def output(page, segment):
     print("信息点抽取开始:\n")
     if page == '':
@@ -18,7 +21,7 @@ def output(page, segment):
             json_file = f'result/IE_{page_num}_{seg_num}.json'
             print(f"正在处理第{page_num}页第{seg_num}项")
             try:
-                dict = json.loads(open(json_file, 'r', encoding='UTF-8').read())
+                dict = json.loads(open(json_file, 'r', encoding='utf-8').read())
                 print("信息点抽取结果如下:", end='\n\n')
                 for key, value in dict.items():
                     value_str = ''
@@ -31,8 +34,8 @@ def output(page, segment):
                         print('\033[4m{a}\033[0m: {b}'.format(a=key, b=value_str))
                 print()
             except FileNotFoundError:
-                print(f"\n\033[31m未找到目标文件: json_file")
-                print("处理系统已退出，请更改目标重试\033[0m\n")
+                print(f"\n\033[31m未找到第{page_num}页第{seg_num}项")
+                print("请更改目标重试\033[0m\n")
                 return
     print("\033[32m输出完毕。\033[0m\n\n")
 
@@ -46,7 +49,10 @@ if __name__ == '__main__':
         dict = {}
         for filename in os.listdir('data/'):
             if os.path.exists(f'result/IE_{filename}'):
-                continue
+                IE_time = time.localtime(os.stat(f"result/IE_{filename}").st_mtime)
+                data_time = time.localtime(os.stat(f"data/{filename}").st_mtime)
+                if IE_time > data_time:
+                    continue
             dict = regularmatch(filename)
             dict.update(getKeywordsFromHanlp(filename))
             # for key, value in dict.items():
