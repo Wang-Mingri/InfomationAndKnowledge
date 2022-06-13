@@ -9,32 +9,37 @@ def cut_sentences(content):
 
 def regularmatch(filename):
     data = json.load(open(f"data/{filename}", "r", encoding='UTF-8'));
-    content = cut_sentences(data["文本"]) # 对文本分句
+    content = cut_sentences(data["文本"])  # 对文本分句
     title = data["标题"]
+
     dir = {}
     dir["留言"] = re.match(r'.*[网关回局长][：民于应](.*)', title, re.M | re.I).group(1).lstrip('“').rstrip('” 题问的留言建议')
     dir["网名"] = []
     dir["手机尾号"] = []
     dir["相关法律"] = []
     for i in content:
-        if re.match(r'.*网民“(.*)”.*', i,re.M | re.I)!= None:
-            dir["网名"].append(re.match(r'.*网民“(.*)”.*', i, re.M | re.I).group(1)) # 获取 网名
-        elif re.match( r'(.*)说$', i, re.M|re.I)!= None:
-            dir["网名"].append(re.match( r'(.*)说$', i, re.M|re.I).group(1).strip())
+        if re.match(r'.*网民“(.*)”.*', i, re.M | re.I) != None:
+            dir["网名"].append(re.match(r'.*网民“(.*)”.*', i, re.M | re.I).group(1))  # 获取 网名
+        elif re.match(r'(.*)说$', i, re.M | re.I) != None:
+            dir["网名"].append(re.match(r'(.*)说$', i, re.M | re.I).group(1).strip())
 
-        if re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I)!= None:
-            dir["手机尾号"].append(re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I).group(1)) # 获取手机尾号后四位
+        if re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I) != None:
+            dir["手机尾号"].append(re.match(r'.*手机尾号(.*)）.*', i, re.M | re.I).group(1))  # 获取手机尾号后四位
 
-        if re.match( r'.*(《.*》).*', i, re.M|re.I)!= None:
-            dir["相关法律"].append(re.match( r'.*(《.*》).*', i, re.M|re.I).group(1)) # 获取 相关法律
+        if re.match(r'.*(《.*》).*', i, re.M | re.I) != None:
+            dir["相关法律"].append(re.match(r'.*(《.*》).*', i, re.M | re.I).group(1))  # 获取 相关法律
 
-
-    dir["相关法律"] = list(set(dir["相关法律"])) #  去重
+    dir["相关法律"] = list(set(dir["相关法律"]))    # 简单去重
+    for i in range(0, len(dir["相关法律"])):      # 逻辑去重
+        for j in range(i + 1, len(dir["相关法律"])):
+            try:
+                if dir["相关法律"][j][1:-1] in dir["相关法律"][i][1:-1] and i != j:
+                    del dir["相关法律"][j]
+                    j -= 1
+            except IndexError:
+                pass
 
     return dir
-
-
-
 
 # 获取 title
 # line = "新公司税务登记太麻烦？税务总局：零门槛套餐式服务来了，准备签收！"
@@ -44,7 +49,6 @@ def regularmatch(filename):
 #     print ("matchObj.group(1) : ", matchObj.group(1))
 # else:
 #     print ("No match!!")
-
 
 
 # 获取 相关法律
