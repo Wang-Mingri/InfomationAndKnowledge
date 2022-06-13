@@ -18,7 +18,7 @@ def output(page, segment):
             json_file = f'result/IE_{page_num}_{seg_num}.json'
             print(f"正在处理第{page_num}页第{seg_num}项")
             try:
-                dict = json.loads(open(json_file, 'r').read())
+                dict = json.loads(open(json_file, 'r', encoding='utf-8').read())
                 print("信息点抽取结果如下:", end='\n\n')
                 for key, value in dict.items():
                     value_str = ''
