@@ -61,7 +61,7 @@ def getArticle(url_html):
         url = url_html # 获取url
 
         html_dict = getDict(title, time, '\n'.join(content), url) # 将以上信息转换为字典格式
-        with open(f"{file_path}{'-'.join(time.split()).replace(':', '-')}.json", 'w') as write_f: # 存入json格式文件
+        with open(f"{file_path}{'-'.join(time.split()).replace(':', '-')}.json", 'w', encoding='UTF-8') as write_f: # 存入json格式文件
             json.dump(html_dict, write_f, indent=4, ensure_ascii=False)
 
     except IndexError as e:

@@ -14,7 +14,7 @@ def get_value(origin_list, label):
 
 
 def getKeywordsFromHanlp(filename):
-    text = json.loads(open(f"data/{filename}", 'r').read())
+    text = json.loads(open(f"data/{filename}", 'r', encoding='UTF-8').read())
     organization = get_value(HanLP(text["标题"], tasks="ner/msra"), 'ORGANIZATION')
     location_segment = text["文本"].split('：')[0]
     location = get_value(HanLP(location_segment, tasks="ner/msra"), 'LOCATION')

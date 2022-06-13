@@ -58,11 +58,15 @@ if __name__ == '__main__':
     # 若不存在倒叙索引表 或者 创建时间早于data 则创建倒叙索引表
     if not (os.path.exists('json/index.json') and os.path.exists('json/wordlist.json')):
         createIndex()
-    else:
-        index_time = time.localtime(os.stat("json/wordlist.json").st_mtime)
-        data_time = time.localtime(os.stat(f"data/{os.listdir('data/')[0]}").st_mtime)
-        if index_time < data_time:
-            createIndex()
+    else:# 若存在则比较更新时间  更新数据则进行更新index
+        file_list = []
+        for file in os.listdir('data/'):
+            index_time = time.localtime(os.stat("json/index.json").st_mtime)
+            data_time = time.localtime(os.stat(f"data/{file}").st_mtime)
+            if index_time < data_time:
+                file_list.append(file)
+        for file in file_list:
+            addIndex(file)
 
     # 获取倒排索引表 index
     index = getIndex("json/index.json")

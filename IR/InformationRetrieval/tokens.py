@@ -52,3 +52,7 @@ def getToken(single_name, state=0, title=0):
 
 def deduplicate(tokens):
     return set(tokens)
+
+
+ret = getToken("在刚刚结束的2021年自由式滑雪与单板滑雪世界锦标赛上",state=1)
+print(deduplicate(ret))
