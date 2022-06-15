@@ -269,6 +269,13 @@ pip install protobuf==3.20
 #### 6.2 核心代码
 
   ```python
+# 计算方法
+# 首先对pieces中出现的单词对应的文档列表取并集。
+# 随后对pieces中出现的单词对文档进行wf-idf计算并评分。
+# 得到所有文档对该查询的评分后再对所有文档进行排序。
+# wf-idf 和 tf-idf比较：通过log计算削弱词项频率对评分的影响。
+# 一篇文章中单词出现n次不代表其权重扩大n倍。
+# 故采用wf-idf来计算
 def getDataFilename(index, pieces):
     temp_list = []
     for piece in pieces:
